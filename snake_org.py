@@ -1,8 +1,11 @@
-import random
 import curses
+import random
 
+# 初期化
 s = curses.initscr()
+#
 curses.curs_set(0)
+
 sh, sw = s.getmaxyx()
 w = curses.newwin(sh, sw, 0, 0)
 w.keypad(1)
@@ -44,12 +47,16 @@ while True:
 
     if snake[0] == food:
         food = None
+        # エサができるまで繰り返す
         while food is None:
+            # 新しいエサを作る
             nf = [
                 random.randint(1, sh - 1),
                 random.randint(1, sw - 1)
             ]
+            # エサがヘビの中にあったら無しにする
             food = nf if nf not in snake else None
+
         w.addch(food[0], food[1], curses.ACS_PI)
     else:
         tail = snake.pop()
